@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'domain/data/local/my_string_shared_prefs_repository.dart';
-import 'domain/data/remote/my_string_backend_server_repository.dart';
+import 'data/local/my_string_shared_prefs_repository.dart';
+import 'data/remote/my_string_backend_server_repository.dart';
 import 'domain/usecase/local/get_my_string_from_shared_prefs_use_case.dart';
 import 'domain/usecase/local/store_my_string_to_shared_prefs_use_case.dart';
 import 'domain/usecase/remote/get_my_string_from_backend_server_use_case.dart';
