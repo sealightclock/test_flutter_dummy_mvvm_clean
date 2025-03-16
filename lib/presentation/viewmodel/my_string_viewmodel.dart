@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../domain/usecase/local/get_my_string_from_shared_prefs_use_case.dart';
-import '../../domain/usecase/local/store_my_string_to_shared_prefs_use_case.dart';
-import '../../domain/usecase/remote/get_my_string_from_backend_server_use_case.dart';
+import 'package:test_flutter_dummy_mvvm_clean/domain/usecase/local/get_my_string_from_shared_prefs_use_case.dart';
+import 'package:test_flutter_dummy_mvvm_clean/domain/usecase/local/store_my_string_to_shared_prefs_use_case.dart';
+import 'package:test_flutter_dummy_mvvm_clean/domain/usecase/remote/get_my_string_from_backend_server_use_case.dart';
 
 class MyStringViewModel extends ChangeNotifier {
   final GetMyStringFromSharedPrefsUseCase getMyStringFromSharedPrefsUseCase;

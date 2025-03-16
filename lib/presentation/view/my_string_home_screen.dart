@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../viewmodel/my_string_viewmodel.dart';
+import 'package:test_flutter_dummy_mvvm_clean/presentation/viewmodel/my_string_viewmodel.dart';
 
 class MyStringHomeScreen extends StatelessWidget {
   const MyStringHomeScreen({super.key}); // Fix: Added key parameter

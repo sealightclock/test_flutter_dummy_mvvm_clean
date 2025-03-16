@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'data/local/my_string_shared_prefs_repository.dart';
-import 'data/remote/my_string_backend_server_repository.dart';
-import 'domain/usecase/local/get_my_string_from_shared_prefs_use_case.dart';
-import 'domain/usecase/local/store_my_string_to_shared_prefs_use_case.dart';
-import 'domain/usecase/remote/get_my_string_from_backend_server_use_case.dart';
-import 'presentation/view/my_string_home_screen.dart';
-import 'presentation/viewmodel/my_string_viewmodel.dart';
+import 'package:test_flutter_dummy_mvvm_clean/data/local/my_string_shared_prefs_repository.dart';
+import 'package:test_flutter_dummy_mvvm_clean/data/remote/my_string_backend_server_repository.dart';
+import 'package:test_flutter_dummy_mvvm_clean/domain/usecase/local/get_my_string_from_shared_prefs_use_case.dart';
+import 'package:test_flutter_dummy_mvvm_clean/domain/usecase/local/store_my_string_to_shared_prefs_use_case.dart';
+import 'package:test_flutter_dummy_mvvm_clean/domain/usecase/remote/get_my_string_from_backend_server_use_case.dart';
+import 'package:test_flutter_dummy_mvvm_clean/presentation/view/my_string_home_screen.dart';
+import 'package:test_flutter_dummy_mvvm_clean/presentation/viewmodel/my_string_viewmodel.dart';
 
 void main() {
   runApp(MyApp());
