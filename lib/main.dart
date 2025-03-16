@@ -17,15 +17,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sharedPrefsRepository = MyStringSharedPrefsRepository();
+    final backendServerRepository = MyStringBackendServerRepository();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<MyStringViewModel>(
           create: (_) => MyStringViewModel(
-            GetMyStringFromSharedPrefsUseCase(MyStringSharedPrefsRepository()),
-            StoreMyStringToSharedPrefsUseCase(MyStringSharedPrefsRepository()),
-            GetMyStringFromBackendServerUseCase(MyStringBackendServerRepository()),
-          ),
-        ),
+      getLocalUseCase: GetMyStringFromSharedPrefsUseCase(repository: sharedPrefsRepository),
+      storeLocalUseCase: StoreMyStringToSharedPrefsUseCase(repository: sharedPrefsRepository),
+      getRemoteUseCase: GetMyStringFromBackendServerUseCase(repository: backendServerRepository),
+    ),
+
+    ),
         ],
       child: MaterialApp(
         title: 'Test Flutter Dummy MVVM Clean',

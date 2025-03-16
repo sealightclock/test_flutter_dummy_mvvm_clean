@@ -1,15 +1,21 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test_flutter_dummy_mvvm_clean/domain/entity/my_string_entity.dart';
 
 class MyStringSharedPrefsRepository {
-  static const String key = 'my_string';
-
-  Future<String> getMyString() async {
+  Future<MyStringEntity> getMyString() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(key) ?? '';
+    String? storedValue = prefs.getString('my_string');
+
+    if (storedValue == null) {
+      storedValue = 'Default Value from DataStore'; // ✅ Ensure default value is returned
+      await prefs.setString('my_string', storedValue); // ✅ Store the default value once
+    }
+
+    return MyStringEntity(storedValue);
   }
 
   Future<void> storeMyString(String value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(key, value);
+    await prefs.setString('my_string', value);
   }
 }
