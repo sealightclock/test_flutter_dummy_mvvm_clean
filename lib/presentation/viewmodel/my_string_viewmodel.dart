@@ -19,6 +19,7 @@ class MyStringViewModel with ChangeNotifier {
   // Flags for UI synchronization:
   bool isLoadingDataFromRemoteServer = false;
 
+  // This is not really part of the ViewModel data, but is needed to control the TextField of the View (MyStringHomeScreen):
   TextEditingController textController = TextEditingController();
 
   // Constructor:
@@ -26,7 +27,10 @@ class MyStringViewModel with ChangeNotifier {
     required this.getLocalUseCase,
     required this.storeLocalUseCase,
     required this.getRemoteUseCase,
-  });
+  }) {
+    // Can this be moved outside of the constructor?:
+    loadInitialValue();
+  }
 
   Future<void> updateFromUser() async {
     // This will trigger a widget rebuild due to a mechanism ...
@@ -39,10 +43,9 @@ class MyStringViewModel with ChangeNotifier {
 
   Future<void> updateFromServer() async {
     isLoadingDataFromRemoteServer = true;
-    notifyListeners();
+    notifyListeners(); // This is needed so that the View can display the circular progress indicator.
     MyStringEntity newValue = await getRemoteUseCase.execute();
     _myString = newValue.value;
-    textController.text = _myString;
     await storeLocalUseCase.execute(_myString);
     isLoadingDataFromRemoteServer = false;
     notifyListeners();
@@ -51,7 +54,6 @@ class MyStringViewModel with ChangeNotifier {
   Future<void> loadInitialValue() async {
     MyStringEntity storedEntity = await getLocalUseCase.execute();
     _myString = storedEntity.value;
-    textController.text = _myString;
-    notifyListeners(); // ✅ Trigger UI update
+    notifyListeners();
   }
 }
