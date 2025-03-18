@@ -11,6 +11,8 @@ class MyStringViewModel with ChangeNotifier {
   final GetMyStringFromBackendServerUseCase getRemoteUseCase;
 
   // This is the single data to be handled by the ViewModel.
+  // In MVVM Clean, we need to encapsulate data.
+  // So we need both "_myString" and "myString".
   String _myString = 'Default Value from ViewModel'; // Kept for debugging
   String get myString => _myString;
 
@@ -24,9 +26,7 @@ class MyStringViewModel with ChangeNotifier {
     required this.getLocalUseCase,
     required this.storeLocalUseCase,
     required this.getRemoteUseCase,
-  }) {
-    loadInitialValue(); // ✅ Load stored value on ViewModel initialization
-  }
+  });
 
   Future<void> updateFromUser() async {
     // This will trigger a widget rebuild due to a mechanism ...

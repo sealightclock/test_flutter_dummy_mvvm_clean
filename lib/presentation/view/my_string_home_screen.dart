@@ -39,12 +39,13 @@ class MyStringHomeScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: viewModel.updateFromServer,
-                    child: const Text('Update from Server'),
+                    child: viewModel.isLoadingDataFromRemoteServer
+                        ? const CircularProgressIndicator()
+                        : const Text('Update from Server'),
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'Current Value: ${viewModel.myString}',
-                    style: const TextStyle(fontSize: 18),
+                    'Current Value: ${viewModel.myString}', style: const TextStyle(fontSize: 18),
                   ),
                 ],
               ),
