@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'presentation/view/my_string_home_screen.dart';
 
 void main() {
@@ -6,7 +7,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key}); // Fix: Added key parameter to avoid
+  // a warning about a named 'key' parameter
 
   @override
   Widget build(BuildContext context) {

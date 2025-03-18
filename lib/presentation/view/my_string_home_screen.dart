@@ -8,7 +8,8 @@ import '../../domain/usecase/remote/get_my_string_from_backend_server_use_case.d
 import '../viewmodel/my_string_viewmodel.dart';
 
 class MyStringHomeScreen extends StatelessWidget {
-  const MyStringHomeScreen({Key? key}) : super(key: key);
+  const MyStringHomeScreen({super.key}); // Fix: Added key parameter to avoid
+  // a warning about a named 'key' parameter
 
   @override
   Widget build(BuildContext context) {

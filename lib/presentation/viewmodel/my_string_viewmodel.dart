@@ -5,13 +5,21 @@ import '../../domain/usecase/remote/get_my_string_from_backend_server_use_case.d
 import '../../domain/entity/my_string_entity.dart';
 
 class MyStringViewModel with ChangeNotifier {
+  // A ViewModel should deal with only Use Cases, not their Repositories.
   final GetMyStringFromSharedPrefsUseCase getLocalUseCase;
   final StoreMyStringToSharedPrefsUseCase storeLocalUseCase;
   final GetMyStringFromBackendServerUseCase getRemoteUseCase;
 
-  bool isLoading = false;
-  bool isLoadingData = true; // ✅ Added flag for UI synchronization
+  // This is the single data to be handled by the ViewModel.
+  String _myString = 'Default Value from ViewModel'; // Kept for debugging
+  String get myString => _myString;
 
+  // Flags for UI synchronization:
+  bool isLoadingDataFromRemoteServer = false;
+
+  TextEditingController textController = TextEditingController();
+
+  // Constructor:
   MyStringViewModel({
     required this.getLocalUseCase,
     required this.storeLocalUseCase,
@@ -20,30 +28,30 @@ class MyStringViewModel with ChangeNotifier {
     loadInitialValue(); // ✅ Load stored value on ViewModel initialization
   }
 
-  String _myString = '';
-  TextEditingController textController = TextEditingController();
+  Future<void> updateFromUser() async {
+    // This will trigger a widget rebuild due to a mechanism ...
+    _myString = textController.text;
+    // Update local storage:
+    await storeLocalUseCase.execute(_myString);
+    // Recommended: notify other listeners:
+    notifyListeners();
+  }
 
-  String get myString => _myString;
+  Future<void> updateFromServer() async {
+    isLoadingDataFromRemoteServer = true;
+    notifyListeners();
+    MyStringEntity newValue = await getRemoteUseCase.execute();
+    _myString = newValue.value;
+    textController.text = _myString;
+    await storeLocalUseCase.execute(_myString);
+    isLoadingDataFromRemoteServer = false;
+    notifyListeners();
+  }
 
   Future<void> loadInitialValue() async {
     MyStringEntity storedEntity = await getLocalUseCase.execute();
     _myString = storedEntity.value;
     textController.text = _myString;
-    isLoadingData = false; // ✅ Ensure this is updated correctly
     notifyListeners(); // ✅ Trigger UI update
-  }
-
-  Future<void> updateFromUser() async {
-    _myString = textController.text;
-    await storeLocalUseCase.execute(_myString); // ✅ Store the value correctly
-    notifyListeners();
-  }
-
-  Future<void> updateFromServer() async {
-    MyStringEntity serverEntity = await getRemoteUseCase.execute();
-    _myString = serverEntity.value;
-    textController.text = _myString;
-    await storeLocalUseCase.execute(_myString);
-    notifyListeners();
   }
 }
